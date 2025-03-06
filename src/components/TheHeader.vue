@@ -3,7 +3,7 @@
     <div class="row align-items-center" style="background-color: aqua; padding: 1rem">
 
       <div class="col-auto d-flex d-sm-none align-items-center justify-content-center">
-        <span>x</span>
+        <span><i @click="showDrawer" class="fa-solid fa-align-justify"></i></span>
       </div>
 
       <div class="col-9 d-flex align-items-center">
