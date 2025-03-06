@@ -1,45 +1,57 @@
 <template>
     <a-menu
-      v-model:openKeys="state.openKeys"
-      v-model:selectedKeys="state.selectedKeys"
-      mode="inline"
-      theme="light"
-      :items="items"
-    >
-      <template v-for="item in items" :key="item.key">
-        <a-menu-item
-          :class="{'selected-menu': state.selectedKeys.includes(item.key)}"
-          @click="selectMenu(item.key)"
-        >
-          {{ item.label }}
-        </a-menu-item>
-      </template>
-    </a-menu>
-  </template>
-  
-  <script setup>
-  import { reactive } from 'vue';
-  
-  const state = reactive({
-    selectedKeys: ['1'], 
-    openKeys :[],
-  });
-  
-  const items = reactive([
-    { key: '1', label: 'Option 1', title: 'Option 1' },
-    { key: '2', label: 'Option 2', title: 'Option 2' },
-    { key: '3', label: 'Option 3', title: 'Option 3' },
-  ]);
-  
-  const selectMenu = (key) => {
-    state.selectedKeys = [key]; 
-  };
-  </script>
-  
-  <style scoped>
-  .selected-menu {
-    background-color: #007bff ;
-    color: white ;
-  }
-  </style>
-  
+     v-model:openKeys="openKeys"
+     v-model:selectedKeys="selectedKeys"
+     mode="inline"
+     theme="white"
+   >
+       <a-menu-item class="admin-users" key="admin-users">
+           <router-link :to="{ name: 'admin-users' }">
+               <span>Tài khoản</span>
+           </router-link>
+       </a-menu-item>
+
+       <a-menu-item class="admin-role" key="admin-role">
+           <router-link :to="{ name: 'admin-role' }">
+               <span>Vai trò</span>
+           </router-link>
+       </a-menu-item>
+
+       <a-menu-item 
+           class="admin-setting" 
+           key="admin-setting"
+           :class="{ 'selected': selectedKeys.includes('admin-setting') }"
+           @click="menuStore.onSelectedKeys(['admin-setting'])"
+       >
+           <router-link :to="{ name: 'admin-setting' }">
+               <span>Cài đặt</span>
+           </router-link>
+       </a-menu-item>
+   </a-menu>
+</template>
+
+<script setup>
+import { storeToRefs } from 'pinia';
+import { useMenu } from '../store/use-menu';
+
+const menuStore = useMenu();
+const { selectedKeys, openKeys } = storeToRefs(menuStore);
+</script>
+
+<style>
+.admin-users,
+.admin-role,
+.admin-setting {
+   text-decoration: none;
+}
+
+.admin-users:hover,
+.admin-role:hover,
+.admin-setting:hover {
+   background-color: aqua;
+}
+
+a {
+   text-decoration: none;
+}
+</style>
