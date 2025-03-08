@@ -1,9 +1,20 @@
 <template>
   <div>
     <a-card title="Tài khoản" style="width: 100%">
+      <div class="col-12">
+        <div class="btn-create-primary">
+          <router-link :to="{name :'admin-users-create'}" >
+          <button class="btn-create">
+              <i class="fa-solid fa-plus"></i>
+        </button>
+      </router-link>
+
+        </div>
+       
+      </div>
       <div class="row">
         <div class="col-12">
-          <a-table :dataSource="users" :columns="columns" >
+          <a-table :dataSource="users" :columns="columns" :scroll="{ x: 576 }" >
             <template #bodyCell="{ column, index , record }">
       <template v-if="column.key === 'index'">
        <span>{{ index +1 }}</span>
@@ -89,3 +100,19 @@ const getUsers = () => {
 
 }
 </script>
+<style>
+.btn-create{
+  border-radius:5px ;
+  color: white;
+  background: #007bff;
+  padding: 6px 16px;
+  cursor: pointer;
+  border: none;
+  margin-bottom: 10px;
+}
+.btn-create-primary{
+  display: flex;
+  justify-content: flex-end;
+
+}
+</style>
