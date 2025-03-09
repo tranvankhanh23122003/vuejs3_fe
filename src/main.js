@@ -1,7 +1,7 @@
 import { createApp } from 'vue'
 import { createPinia } from 'pinia'
 import router from './router/index.js'
-import {Input, InputPassword,Select, Avatar,Table,Card ,Menu ,List,Drawer ,Button, message } from 'ant-design-vue';
+import {Input,Select, Avatar,Table,Card ,Menu ,List,Drawer ,Button, message } from 'ant-design-vue';
 import axios from 'axios';
 window.axios =axios;
 import './style.css'
@@ -16,12 +16,10 @@ app.use(createPinia());
 app.use(router)
 app.use(Button);
 app.use(Input);
-app.use(InputPassword);
 app.use(Table);
 app.use(Avatar);
 app.use(Select);
 app.use(Card);
-app.use(Drawer);
 app.use(Drawer);
 app.use(List);
 app.use(Menu);
