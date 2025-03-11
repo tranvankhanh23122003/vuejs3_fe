@@ -7,6 +7,7 @@
                         <a-avatar shape="square" :size="200">
                             <template #icon>
                                 <img src="../../../assets/icondoreamon.png" alt="Avatar">
+                                <!-- <img src="https://scontent.fdad3-5.fna.fbcdn.net/v/t39.30808-6/476148410_122198956124187414_4257261928995722873_n.jpg?stp=dst-jpg_p843x403_tt6&_nc_cat=102&ccb=1-7&_nc_sid=833d8c&_nc_ohc=ilYy-2cZUykQ7kNvgEkGg-s&_nc_oc=AdiG6GT3jEH5q4vwXMF2rD9Q6nuUzaC-G8hgEql470Zn0LXoa3aYrVa8hS_SQgbKMe4&_nc_zt=23&_nc_ht=scontent.fdad3-5.fna&_nc_gid=AWJlvRlpzVF9asm5LrAkX7J&oh=00_AYFzDgzULzkgn7vgj-hiP6xxgc98ilNpLx_NEmnspTcv9g&oe=67D4F23D" alt="Avatar"> -->
                             </template>
                         </a-avatar>
                         <button class="btn-select-picture">
@@ -22,16 +23,16 @@
                     <div class="row">
                         <div class="col-3 text-end">
                             <span class="text-danger me-1">*</span>
-                            <span :class="{ 'text-danger': errors.status }">Tình trạng</span>
+                            <span :class="{ 'text-danger': errors?.status }">Tình trạng</span>
                         </div>
                         <div class="col-5">
                             <a-select show-search placeholder="chọn tình trạng" style="width: 100%"
                                 :options="users_status" :filter-option="filterOption" allow-clear
                                 v-model:value="users.status" 
-                                :class="{ 'select-danger': errors.status }">
+                                :class="{ 'select-danger': errors?.status }">
                             </a-select>
                             <div class="w-100 text-danger">
-                                <span v-if="errors.status">{{ errors.status[0] }}</span>
+                                <span v-if="errors?.status">{{ errors?.status[0] }}</span>
                             </div>
                         </div>
                         <div class="col">
@@ -40,13 +41,13 @@
                     <div class="row mt-3">
                         <div class="col-3 text-end">
                             <span class="text-danger me-1">*</span>
-                            <span :class="{ 'text-danger': errors.username }">Tên tài khoản</span>
+                            <span :class="{ 'text-danger': errors?.username }">Tên tài khoản</span>
                         </div>
                         <div class="col-5">
                             <a-input placeholder="Nhập tên tài khoản" allow-clear v-model:value="users.username" 
-                            :class="{ 'input-danger': errors.username }" />
+                            :class="{ 'input-danger': errors?.username }" />
                             <div class="w-100 text-danger">
-                                <span v-if="errors.username">{{ errors.username[0] }}</span>
+                                <span v-if="errors?.username">{{ errors?.username[0] }}</span>
                             </div>
                         </div>
                         <div class="col">
@@ -56,13 +57,13 @@
                     <div class="row mt-3">
                         <div class="col-3 text-end">
                             <span class="text-danger me-1">*</span>
-                            <span :class="{ 'text-danger': errors.name }">Họ và Tên</span>
+                            <span :class="{ 'text-danger': errors?.name }">Họ và Tên</span>
                         </div>
                         <div class="col-5">
                             <a-input placeholder="Nhập Họ và Tên" allow-clear v-model:value="users.name" 
-                            :class="{ 'input-danger': errors.name }" />
+                            :class="{ 'input-danger': errors?.name }" />
                             <div class="w-100 text-danger">
-                                <span v-if="errors.name">{{ errors.name[0] }}</span>
+                                <span v-if="errors?.name">{{ errors?.name[0] }}</span>
                             </div>
                         </div>
                         <div class="col">
@@ -72,13 +73,13 @@
                     <div class="row mt-3">
                         <div class="col-3 text-end">
                             <span class="text-danger me-1">*</span>
-                            <span :class="{ 'text-danger': errors.email }">Email</span>
+                            <span :class="{ 'text-danger': errors?.email }">Email</span>
                         </div>
                         <div class="col-5">
                             <a-input placeholder="Nhập Email" allow-clear v-model:value="users.email" 
-                            :class="{ 'input-danger': errors.email }" />
+                            :class="{ 'input-danger': errors?.email }" />
                             <div class="w-100 text-danger">
-                                <span v-if="errors.email">{{ errors.email[0] }}</span>
+                                <span v-if="errors?.email">{{ errors?.email[0] }}</span>
                             </div>
                         </div>
                         <div class="col">
@@ -88,16 +89,16 @@
                     <div class="row mt-3">
                         <div class="col-3 text-end">
                             <span class="text-danger me-1">*</span>
-                            <span :class="{ 'text-danger': errors.department_id }">Phòng ban</span>
+                            <span :class="{ 'text-danger': errors?.department_id }">Phòng ban</span>
                         </div>
                         <div class="col-5">
                             <a-select show-search placeholder="chọn phòng ban" style="width: 100%"
                                 :options="departments" :filter-option="filterOption" allow-clear
                                 v-model:value="users.department_id"
-                                :class="{ 'select-danger': errors.department_id }">
+                                :class="{ 'select-danger': errors?.department_id }">
                             </a-select>
                             <div class="w-100 text-danger">
-                                <span v-if="errors.department_id">{{ errors.department_id[0] }}</span>
+                                <span v-if="errors?.department_id">{{ errors?.department_id[0] }}</span>
                             </div>
                         </div>
                         <div class="col">
@@ -107,14 +108,14 @@
                     <div class="row mt-3">
                         <div class="col-3 text-end">
                             <span class="text-danger me-1">*</span>
-                            <span :class="{ 'text-danger': errors.password }">Mật khẩu</span>
+                            <span :class="{ 'text-danger': errors?.password }">Mật khẩu</span>
                         </div>
                         <div class="col-5">
                             <a-input-password placeholder="Nhập Mật khẩu" allow-clear v-model:value="users.password"
-                            :class="{ 'input-danger': errors.password }"  />
+                            :class="{ 'input-danger': errors?.password }"  />
                         </div>
                         <div class="w-100 valaditon-password text-danger">
-                                <span v-if="errors.password">{{ errors.password[0] }}</span>
+                                <span v-if="errors?.password">{{ errors?.password[0] }}</span>
                             </div>
                         <div class="col">
 
@@ -123,14 +124,14 @@
                     <div class="row mt-3">
                         <div class="col-3 text-end">
                             <span class="text-danger me-1">*</span>
-                            <span :class="{ 'text-danger': errors.password }">Xác nhận Mật khẩu</span>
+                            <span :class="{ 'text-danger': errors?.password }">Xác nhận Mật khẩu</span>
                         </div>
                         <div class="col-5">
                             <a-input-password placeholder="Xác nhận Mật khẩu" allow-clear
-                                v-model:value="users.password" 
-                                :class="{ 'input-danger': errors.password}" />
+                                v-model:value="users.password_confirmation" 
+                                :class="{ 'input-danger': errors?.password_confirmation}" />
                                 <div class="w-100 text-danger">
-                                <span v-if="errors.password">{{ errors.password[0] }}</span>
+                                <span v-if="errors?.password_confirmation">{{ errors?.password_confirmation[0] }}</span>
                             </div>
                         </div>
                         <div class="col">
@@ -203,8 +204,6 @@ const getUserCreate = () => {
         })
 }
 getUserCreate();
-createUsers();
-
 
 </script>
 <style>
