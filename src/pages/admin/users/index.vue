@@ -20,11 +20,18 @@
        <span>{{ index +1 }}</span>
       </template>
 
-      <template v-if="column.key === 'status'">
-       <span v-if="record.status ==1 " class="text-primary">{{ record.status }}</span>
-       <span v-else-if="record.status ==2 " class="text-danger">{{  record.status }}</span>
+        <template v-if="column.key === 'status'">
+        <span v-if="record.status ==1 " class="text-primary">{{ record.status }}</span>
+        <span v-else-if="record.status ==2 " class="text-danger">{{  record.status }}</span>
 
-      </template>
+        </template>
+        <template v-if="column.key === 'action'">
+    <router-link :to="{name:'admin-users-edit' , params : {id: record.id}}">
+    <button class="btn-action">
+        <i class="fa-solid fa-pen-to-square"></i>{{ record.id }}
+       </button>
+      </router-link>
+        </template>
     </template>
             </a-table>
 
@@ -114,5 +121,13 @@ const getUsers = () => {
   display: flex;
   justify-content: flex-end;
 
+}
+.btn-action{
+  background: #007bff;
+  color: white;
+  border: none;
+  cursor: pointer;
+  border-radius:5px ;
+margin-left:15px ;
 }
 </style>
