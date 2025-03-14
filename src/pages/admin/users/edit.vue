@@ -1,14 +1,14 @@
 <template>
-    <form @submit.prevent="">
+    <form @submit.prevent="updateUsers()">
         <a-card title="Cập nhật tài khoản" style="width: 100%;">
             <div class="row">
                 <div class="col-4">
                     <div class="avatar d-flex justify-content-center">
                         <a-avatar shape="square" :size="200">
                             <template #icon>
-                                <!-- <img src="../../../assets/icondoreamon.png" alt="Avatar"> -->
-                                <img src="https://scontent.fdad3-5.fna.fbcdn.net/v/t39.30808-6/476148410_122198956124187414_4257261928995722873_n.jpg?stp=dst-jpg_p843x403_tt6&_nc_cat=102&ccb=1-7&_nc_sid=833d8c&_nc_ohc=ilYy-2cZUykQ7kNvgEkGg-s&_nc_oc=AdiG6GT3jEH5q4vwXMF2rD9Q6nuUzaC-G8hgEql470Zn0LXoa3aYrVa8hS_SQgbKMe4&_nc_zt=23&_nc_ht=scontent.fdad3-5.fna&_nc_gid=AWJlvRlpzVF9asm5LrAkX7J&oh=00_AYFzDgzULzkgn7vgj-hiP6xxgc98ilNpLx_NEmnspTcv9g&oe=67D4F23D"
-                                    alt="Avatar">
+                                <img src="../../../assets/icondoreamon.png" alt="Avatar">
+                                <!-- <img src="https://scontent.fdad3-5.fna.fbcdn.net/v/t39.30808-6/476148410_122198956124187414_4257261928995722873_n.jpg?stp=dst-jpg_p843x403_tt6&_nc_cat=102&ccb=1-7&_nc_sid=833d8c&_nc_ohc=ilYy-2cZUykQ7kNvgEkGg-s&_nc_oc=AdiG6GT3jEH5q4vwXMF2rD9Q6nuUzaC-G8hgEql470Zn0LXoa3aYrVa8hS_SQgbKMe4&_nc_zt=23&_nc_ht=scontent.fdad3-5.fna&_nc_gid=AWJlvRlpzVF9asm5LrAkX7J&oh=00_AYFzDgzULzkgn7vgj-hiP6xxgc98ilNpLx_NEmnspTcv9g&oe=67D4F23D" -->
+                                alt="Avatar">
                             </template>
                         </a-avatar>
                         <button class="btn-select-picture">
@@ -207,7 +207,8 @@ import { useRouter } from 'vue-router';
 import { useRoute } from 'vue-router';
 import { message } from 'ant-design-vue';
 import axios from 'axios';
-import { data } from 'jquery';
+import { data, error } from 'jquery';
+import dayjs from 'dayjs';
 const menuStore = useMenu();
 menuStore.onSelectedKeys(["admin-users"]);
 const filterOption = (input, option) => {
@@ -224,7 +225,6 @@ const users = reactive({
     status: [],
     login_at: "",
     change_password_at: "",
-
 });
 const errors = ref({});
 const router = useRouter();
@@ -238,7 +238,6 @@ const getUsersEdit = () => {
     // console.log(`users đang truy suất là ${route.params.id}`)
     axios.get(`http://127.0.0.1:8000/api/users/${route.params.id}/edit`)
         .then((response) => {
-            console.log(".dataàkjgasdkjfhasdkuf", response.data);
             users.username = response.data.users.username;
             users.name = response.data.users.name;
             users.email = response.data.users.email;
@@ -246,9 +245,8 @@ const getUsersEdit = () => {
             users.status = response.data.users.status;
             // response.data.users.login_at ? users.login_at = response.data.users.login_at : users.login_at = " chưa có lần đăng nhập"
             // response.data.users.change_password_at ? users.change_password_at = response.data.users.change_password_at : users.change_password_at = "Chưa có lần đổi mật khẩu gần đây"
-            users.login_at = response.data.users.login_at || "chưa có lần đăng nhập gần đây";
-            users.change_password_at = response.data.users.change_password_at || " chưa có lần đổi mật khẩu gần đây ";
-            console.log('log', users);
+            users.login_at = dayjs(response.data.users.login_at).format('DD/MM/YYYY - HH:mm') || "chưa có lần đăng nhập gần đây";
+            users.change_password_at = dayjs(response.data.users.change_password_at).format('DD/MM/YYYY - HH:mm') || " chưa có lần đổi mật khẩu gần đây ";
 
             departments.value = response.data.departments;
             users_status.value = response.data.users_status;
@@ -259,6 +257,27 @@ const getUsersEdit = () => {
 
         })
 
+}
+const updateUsers = () => {
+    console.log('click');
+    
+    var payload = {
+        ...users,
+        "change_password": change_password.value
+    }
+    console.log('pas', payload);
+    
+    axios.put(`http://127.0.0.1:8000/api/users/${route.params.id}`, payload)  
+        .then((response) => {
+            errors.value = {}
+            if(response.status ==200){
+                message.success("Cập nhật tài khoản thành công")
+                router.push({name: "admin-users"});       // khi cập nhật thành công sẽ đẩy về trang của đường dẫn
+            }
+        })
+        .catch((error) => {
+            errors.value = error.response.data.errors
+        })
 }
 onMounted(() => {
     getUsersEdit();

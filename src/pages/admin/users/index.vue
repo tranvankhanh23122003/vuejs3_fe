@@ -31,6 +31,9 @@
         <i class="fa-solid fa-pen-to-square"></i>{{ record.id }}
        </button>
       </router-link>
+      <button class="btn-delete" @click="deleteUsers(record.id)">
+        <i class="fa-solid fa-trash"></i>
+       </button>
         </template>
     </template>
             </a-table>
@@ -43,10 +46,13 @@
 </template>
 
 <script setup>
-import { onMounted, ref } from 'vue'
-
+import {  createVNode,onMounted, ref } from 'vue'
+import { Modal } from 'ant-design-vue';
 import { useMenu } from '../../../store/use-menu';
+import { ExclamationCircleOutlined } from '@ant-design/icons-vue';
+import { message } from 'ant-design-vue';
 import axios from 'axios';
+import { error } from 'jquery';
 const columns = [
   {
     title: '#',
@@ -89,6 +95,7 @@ const columns = [
   }
 ]
 
+
 const users = ref([]);
 const menuStore = useMenu();
 
@@ -96,6 +103,30 @@ onMounted(() => {
   menuStore.onSelectedKeys(["admin-users"]);
   getUsers();
 });
+const deleteUsers =(id)=>{
+
+  Modal.confirm({
+        content: 'Bạn có chắc chắn xóa mục này không',
+        icon: createVNode(ExclamationCircleOutlined),
+        onOk() {
+          axios.delete(`http://127.0.0.1:8000/api/users/${id}`)
+.then((response)=>{
+  if(response.status == 0){
+    message.success(`Bạn đã xóa thành công ${id}`)
+getUsers();
+  }
+})
+.catch((error)=>{
+  console.log(error)
+})
+        },
+        cancelText: 'Hủy',
+        onCancel() {
+          Modal.destroyAll();
+        },
+      });
+
+}
 const getUsers = () => {
   axios.get("http://127.0.0.1:8000/api/users")
     .then((response) => {
@@ -106,6 +137,7 @@ const getUsers = () => {
     })
 
 }
+
 </script>
 <style>
 .btn-create{
@@ -124,6 +156,15 @@ const getUsers = () => {
 }
 .btn-action{
   background: #007bff;
+  color: white;
+  border: none;
+  cursor: pointer;
+  border-radius:5px ;
+margin-left:15px ;
+width: 50px;
+}
+.btn-delete{
+  background: red;
   color: white;
   border: none;
   cursor: pointer;
